@@ -145,3 +145,13 @@ class Cuantitativos:
         
         # Si es multimodal, devuelve la lista
         return modas
+
+# --- Rango ---
+    def calcular_rango(self):
+        """
+        Calcula el rango
+        """
+        # self.datos ya está ordenada
+        minimo = self.datos[0]
+        maximo = self.datos[self.n - 1]
+        return maximo - minimo
