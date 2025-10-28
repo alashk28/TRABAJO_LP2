@@ -21,3 +21,25 @@ class DataManager:
         except Exception as e:
             print(f"Error al leer el CSV: {e}")
             return False
+
+#Clasificacion
+
+    def clasificar_columnas(self):
+        """
+        Clasifica las columnas en cuantitativas y cualitativas utilizando tipos de datos de Pandas.
+        """
+        if self.df is None:
+            print("Error: DataFrame no cargado.")
+            return
+
+        self.cuantitativas = []
+        self.cualitativas = []
+
+        for columna in self.df.columns:
+            if pd.api.types.is_numeric_dtype(self.df[columna]):
+                self.cuantitativas.append(columna)
+            else:
+                self.cualitativas.append(columna)
+
+        print(f"Commit 3: Clasificación completada. Cuantitativas: {self.cuantitativas}")
+        return self.cuantitativas, self.cualitativas
