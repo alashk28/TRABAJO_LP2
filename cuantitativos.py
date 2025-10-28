@@ -48,3 +48,29 @@ class Cuantitativos:
             indice_sup = self.n // 2
             indice_inf = indice_sup - 1
             return (self.datos[indice_inf] + self.datos[indice_sup]) / 2
+
+    # --- Varianza ---
+    def calcular_varianza(self, es_muestra: bool = True):
+        """
+        Calcula la varianza 
+        """
+        media = self.media_calculada
+        
+        suma_diferencias_sq = 0
+        for x in self.datos:
+            suma_diferencias_sq += (x - media) ** 2
+        
+        if es_muestra and self.n > 1:
+            denominador = self.n - 1 # Muestral
+        else:
+            denominador = self.n # Poblacional
+            
+        return suma_diferencias_sq / denominador
+
+    # --- Desviación Estándar ---
+    def calcular_desviacion_estandar(self, es_muestra: bool = True):
+        """
+        Calcula la desviación estándar usando la Varianza
+        """
+        varianza = self.calcular_varianza(es_muestra=es_muestra)
+        return math.sqrt(varianza)
