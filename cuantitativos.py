@@ -106,3 +106,42 @@ class Cuantitativos:
             "q3": q3,
             "iqr": iqr
         }
+
+# --- Moda ---
+    def calcular_moda(self):
+        """
+        Calcula la moda (o modas) de los datos.
+        """
+        # Contar frecuencias
+        frecuencias = {}
+        for num in self.datos:
+            if num in frecuencias:
+                frecuencias[num] += 1
+            else:
+                frecuencias[num] = 1
+        
+        # Encontrar la frecuencia máxima
+        if not frecuencias:
+            return [] # No hay datos, no hay moda
+
+        max_frecuencia = 0
+        for num in frecuencias:
+            if frecuencias[num] > max_frecuencia:
+                max_frecuencia = frecuencias[num]
+
+        #  Si todos los números son únicos, no hay moda
+        if max_frecuencia == 1 and self.n > 1:
+            return [] 
+
+        #  Encontrar todos los números con esa frecuencia máxima
+        modas = []
+        for num in frecuencias:
+            if frecuencias[num] == max_frecuencia:
+                modas.append(num)
+        
+        # Si es unimodal, devuelve solo el número
+        if len(modas) == 1:
+            return modas[0]
+        
+        # Si es multimodal, devuelve la lista
+        return modas
