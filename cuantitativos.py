@@ -33,3 +33,18 @@ class Cuantitativos:
         Devuelve la media de los datos.
         """
         return self.media_calculada
+
+    # --- Mediana ---
+    def calcular_mediana(self):
+        """
+        Calcula la mediana 
+        """
+        if self.n % 2 == 1:
+            # Impar
+            indice = self.n // 2
+            return self.datos[indice]
+        else:
+            # Par
+            indice_sup = self.n // 2
+            indice_inf = indice_sup - 1
+            return (self.datos[indice_inf] + self.datos[indice_sup]) / 2
