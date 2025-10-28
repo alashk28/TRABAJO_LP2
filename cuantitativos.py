@@ -155,3 +155,30 @@ class Cuantitativos:
         minimo = self.datos[0]
         maximo = self.datos[self.n - 1]
         return maximo - minimo
+
+# --- Coeficiente de Variación (Relativo) ---
+    def calcular_coeficiente_variacion(self, es_muestra: bool = True):
+        """
+        Calcula el Coeficiente de Variación de Pearson.
+        """
+        media = self.media_calculada
+        if media == 0:
+            # No se puede dividir por cero, no está definido
+            return float('nan') 
+            
+        desviacion = self.calcular_desviacion_estandar(es_muestra=es_muestra)
+        return (desviacion / media)
+
+    # --- Asimetría ---
+    def calcular_asimetria_pearson(self, es_muestra: bool = True):
+        """
+        Calcula el Coeficiente de Asimetría de Pearson
+        """
+        media = self.media_calculada
+        mediana = self.calcular_mediana()
+        desviacion = self.calcular_desviacion_estandar(es_muestra=es_muestra)
+
+        if desviacion == 0:
+            return 0 # No hay variabilidad, es simétrico
+            
+        return (3 * (media - mediana)) / desviacion
