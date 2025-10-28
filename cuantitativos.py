@@ -74,3 +74,35 @@ class Cuantitativos:
         """
         varianza = self.calcular_varianza(es_muestra=es_muestra)
         return math.sqrt(varianza)
+
+    # --- Percentiles (Q1, Q3) ---
+    def _calcular_percentil(self, p: float):
+        """
+        Función auxiliar para calcular percentiles
+        """
+        posicion = (self.n - 1) * p
+        k = int(posicion)
+        d = posicion - k
+        
+        if d == 0:
+            return self.datos[k]
+        else:
+            if k + 1 < self.n:
+                return self.datos[k] + d * (self.datos[k+1] - self.datos[k])
+            else:
+                return self.datos[k]
+
+    # --- Rango Intercuartílico (IQR) ---
+    def calcular_cuartiles_iqr(self):
+        """
+        Calcula Q1, Q3 y el IQR (Q3 - Q1).
+        """
+        q1 = self._calcular_percentil(0.25)
+        q3 = self._calcular_percentil(0.75)
+        iqr = q3 - q1
+        
+        return {
+            "q1": q1,
+            "q3": q3,
+            "iqr": iqr
+        }
