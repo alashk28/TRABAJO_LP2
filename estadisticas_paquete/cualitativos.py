@@ -38,7 +38,7 @@ class Cualitativos:
             rel = c / total if total != 0 else 0
             row = {'value': v, 'count': c, 'relative': rel, 'cumulative': None}
             rows.append(row)
-        
+
         # Primero, calcular acumulados en el orden de aparición
         running = 0
         for i in range(0, self._longitud(rows)):
@@ -63,7 +63,7 @@ class Cualitativos:
                         tmp = rows[j]
                         rows[j] = rows[j+1]
                         rows[j+1] = tmp
-            
+
             # Tercero, recalcular acumulados DESPUÉS de ordenar
             running = 0
             for i in range(0, self._longitud(rows)):
