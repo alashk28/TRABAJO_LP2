@@ -10,7 +10,7 @@ class DataManager:
         self.cuantitativas = []
         self.cualitativas = []
 
-    def leer_csv(self, encoding='utf-8-sig'):
+    def leer_csv(self, encoding='latin1'):
         """
         Carga un archivo CSV en un DataFrame de Pandas.
         Permite definir el encoding del archivo.
