@@ -1,16 +1,6 @@
+
 class Cualitativos:
-    """
-    Clase para estadísticas cualitativas.
-    Métodos:
-      - build_frequency_table(sort_by_count=False)
-      - modes()
-      - moda(columna=None)  # alias en español
-      - mode_type()
-      - relative_frequencies()
-      - summary(include_table=True, sort_table_by_count=False)
-      - add(value), extend(iterable)
-      - __str__()
-    """
+    """Clase para estadísticas cualitativas."""
 
     def __init__(self, datos=None, nombre="Variable_Cualitativa"):
         self.nombre = nombre
@@ -21,7 +11,6 @@ class Cualitativos:
         self._tabla = None
         self._modas = None
 
-    # ---------- utilidades primarias ----------
     def _longitud(self, iterable):
         c = 0
         for _ in iterable:
@@ -40,12 +29,7 @@ class Cualitativos:
                 frec[valor] = 1
         return frec
 
-    # ---------- tabla de frecuencias ----------
     def build_frequency_table(self, sort_by_count=False, descending=True):
-        """
-        Retorna lista de filas: {'value', 'count', 'relative', 'cumulative'}.
-        Si sort_by_count=True aplica un bubble sort primitivo por 'count'.
-        """
         counts = self._frecuencias()
         total = self._contar_elementos()
         rows = []
@@ -54,20 +38,20 @@ class Cualitativos:
             rel = c / total if total != 0 else 0
             row = {'value': v, 'count': c, 'relative': rel, 'cumulative': None}
             rows.append(row)
-
         
+        # Primero, calcular acumulados en el orden de aparición
         running = 0
         for i in range(0, self._longitud(rows)):
             running = running + rows[i]['count']
             rows[i]['cumulative'] = running
 
-        
+        # Segundo, ordenar si se solicita (Bubble Sort)
         if sort_by_count:
             n = self._longitud(rows)
             for i in range(0, n):
                 for j in range(0, n - 1 - i):
                     a = rows[j]['count']
-                    b = rows[j + 1]['count']
+                    b = rows[j+1]['count']
                     swap = False
                     if descending:
                         if a < b:
@@ -77,9 +61,10 @@ class Cualitativos:
                             swap = True
                     if swap:
                         tmp = rows[j]
-                        rows[j] = rows[j + 1]
-                        rows[j + 1] = tmp
+                        rows[j] = rows[j+1]
+                        rows[j+1] = tmp
             
+            # Tercero, recalcular acumulados DESPUÉS de ordenar
             running = 0
             for i in range(0, self._longitud(rows)):
                 running = running + rows[i]['count']
@@ -88,14 +73,9 @@ class Cualitativos:
         self._tabla = rows
         return rows
 
-    # ---------- moda(s) ----------
     def modes(self):
-        """Devuelve lista con la(s) moda(s)."""
-        if self._modas is not None:
-            return self._modas
         counts = self._frecuencias()
         if not counts:
-            self._modas = []
             return []
         max_count = None
         for v in counts:
@@ -109,14 +89,7 @@ class Cualitativos:
         self._modas = result
         return result
 
-    def moda(self, columna=None):
-        """
-        Alias en español para modes().
-        """
-        return self.modes()
-
     def mode_type(self):
-        """Devuelve 'Amodal', 'Unimodal', 'Bimodal' o 'Multimodal'."""
         mods = self.modes()
         c = self._longitud(mods)
         if c == 0:
@@ -128,9 +101,7 @@ class Cualitativos:
         else:
             return "Multimodal"
 
-    # ---------- frecuencias relativas ----------
     def relative_frequencies(self):
-        """Retorna diccionario {valor: proporción (0..1)}."""
         counts = self._frecuencias()
         total = self._contar_elementos()
         rel = {}
@@ -138,9 +109,7 @@ class Cualitativos:
             rel[v] = counts[v] / total if total != 0 else 0
         return rel
 
-    # ---------- resumen y modificaciones ----------
     def summary(self, include_table=True, sort_table_by_count=False):
-        """Devuelve diccionario resumen con info solicitada."""
         total = self._contar_elementos()
         counts = self._frecuencias()
         unique = 0
@@ -154,11 +123,10 @@ class Cualitativos:
             'mode_type': self.mode_type()
         }
         if include_table:
-            res['frequency_table'] = self.build_frequency_table(sort_by_count=sort_table_by_count)
+            res['frequency_table'] = self.build_frequency_table(sort_table_by_count=sort_table_by_count)
         return res
 
     def add(self, value):
-        """Añade un valor y limpia caches."""
         self.datos.append(value)
         self._tabla = None
         self._modas = None
@@ -169,7 +137,6 @@ class Cualitativos:
         self._tabla = None
         self._modas = None
 
-    # ---------- representación ----------
     def __str__(self):
         total = self._contar_elementos()
         counts = self._frecuencias()
@@ -179,4 +146,3 @@ class Cualitativos:
         return "<Cualitativos variable='{}' n={} categories={}>".format(
             self.nombre, total, unique
         )
-        
