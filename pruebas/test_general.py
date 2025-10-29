@@ -36,7 +36,7 @@ print("Moda de 'Sexo':", cuali.moda('Sexo'))
 ruta_salida = os.path.join(os.path.dirname(__file__), "..", "salidas", "resultados.txt")
 os.makedirs(os.path.dirname(ruta_salida), exist_ok=True)  # Asegura que la carpeta exista
 
-with open(ruta_salida, "w", encoding="utf-8") as f:
+with open(ruta_salida, "w", encoding="latin1") as f:
     f.write("RESULTADOS DE LAS PRUEBAS\n\n")
     f.write("Media de Nota: " + str(cuant.media('Nota')) + "\n")
     f.write("Mediana: " + str(cuant.mediana('Nota')) + "\n")
