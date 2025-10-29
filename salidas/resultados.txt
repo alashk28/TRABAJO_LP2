@@ -1,0 +1,6 @@
+RESULTADOS DE LAS PRUEBAS
+
+Media de Nota: 16.6
+Mediana: 17.0
+Desviación estándar: 2.0736441353327724
+Moda de Sexo: F

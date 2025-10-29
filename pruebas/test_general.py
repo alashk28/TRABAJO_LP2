@@ -1,46 +1,74 @@
-# Inicializando
 import sys
 import os
-import pandas as pd
-
-# Esto permite importar tu paquete desde la carpeta padre
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+import pandas as pd
+import os
+
+from estadisticas_paquete.cualitativos import Cualitativos
 
 from estadisticas_paquete.base_data import DataManager
 from estadisticas_paquete.cuantitativos import Cuantitativos
-from estadisticas_paquete.cualitativos import Cualitativos
 
-# Cargando CSV
+# --- Carga de Datos ---
 ruta_csv = os.path.join(os.path.dirname(__file__), "datos_prueba.csv")
 print("Cargando datos desde:", ruta_csv)
 
+# Usaremos DataManager SÓLO para leer el CSV y tener el DataFrame
 data_manager = DataManager(ruta_csv)
-# Intentamos leer el CSV con encoding utf-8-sig para evitar errores con BOM
-if not data_manager.leer_csv(encoding='utf-8-sig'):
-    print("No se pudo cargar el CSV. Saliendo...")
-    sys.exit(1)
+data_manager.leer_csv()
 
-# Prueba para variables cuantitativas
+# --- Prueba Cuantitativos  ---
 print("\nProbando funciones cuantitativas:")
-cuant = Cuantitativos(data_manager.df)
-print("Media de la columna 'Nota':", cuant.media('Nota'))
-print("Mediana:", cuant.mediana('Nota'))
-print("Desviación estándar:", cuant.desviacion_estandar('Nota'))
 
-# Prueba para variables cualitativas
-print("\nProbando funciones cualitativas:")
-cuali = Cualitativos(data_manager.df)
-print("Moda de 'Sexo':", cuali.moda('Sexo'))
+cuant = Cuantitativos(ruta_csv) 
+if cuant.df is not None:
+    print("Media de la columna 'Nota':", cuant.media('Nota'))
+    print("Mediana:", cuant.mediana('Nota'))
+    print("Desviación estándar:", cuant.desviacion_estandar('Nota'))
+else:
+    print("No se pudieron calcular las estadísticas cuantitativas.")
 
-# Guardando resultados en la carpeta 'salidas'
-ruta_salida = os.path.join(os.path.dirname(__file__), "..", "salidas", "resultados.txt")
-os.makedirs(os.path.dirname(ruta_salida), exist_ok=True)  # Asegura que la carpeta exista
 
-with open(ruta_salida, "w", encoding="latin1") as f:
-    f.write("RESULTADOS DE LAS PRUEBAS\n\n")
-    f.write("Media de Nota: " + str(cuant.media('Nota')) + "\n")
-    f.write("Mediana: " + str(cuant.mediana('Nota')) + "\n")
-    f.write("Desviación estándar: " + str(cuant.desviacion_estandar('Nota')) + "\n")
-    f.write("Moda de Sexo: " + str(cuali.moda('Sexo')) + "\n")
+# --- PRUEBA CUALITATIVOS  ---
+print("\n Probando funciones cualitativas (Nueva Clase):")
 
-print(f"\nResultados guardados en: {ruta_salida}")
+if data_manager.df is not None:
+    # 1. Extraemos la columna 'Sexo' del DataFrame y la convertimos en una LISTA
+    try:
+        lista_sexo = data_manager.df['Sexo'].tolist()
+        
+        # 2. Pasamos la LISTA a la nueva clase Cualitativos
+        cuali_sexo = Cualitativos(datos=lista_sexo, nombre="Sexo")
+
+        # 3. ¡Llamamos al método summary() para obtener la tabla!
+        #    Usamos sort_table_by_count=True para ordenarla.
+        resumen = cuali_sexo.summary(include_table=True, sort_table_by_count=True)
+
+        # 4. Imprimimos los resultados de la tabla
+        print(f"\n--- Tabla de Frecuencia para: {resumen['variable']} ---")
+        print(f"Total de datos: {resumen['n']}")
+        print(f"Moda(s): {resumen['modes']} ({resumen['mode_type']})")
+        
+        print("\n" + "-"*30)
+        print(f"{'Valor':<10} | {'Conteo':<6} | {'Relativa':<8} | {'Acumulada':<9}")
+        print("-" * 30)
+
+        # Iteramos sobre la tabla de frecuencia generada
+        if 'frequency_table' in resumen:
+            for fila in resumen['frequency_table']:
+                # Formateamos la salida para que se vea como una tabla
+                valor = str(fila['value'])
+                conteo = str(fila['count'])
+                relativa = f"{fila['relative']:.1%}" # Formato de porcentaje
+                acumulada = str(fila['cumulative'])
+                
+                print(f"{valor:<10} | {conteo:<6} | {relativa:<8} | {acumulada:<9}")
+        print("-" * 30)
+
+    except KeyError:
+        print("Error: La columna 'Sexo' no se encontró en el CSV.")
+    except Exception as e:
+        print(f"Ocurrió un error al analizar datos cualitativos: {e}")
+        
+else:
+    print("No se guardaron resultados porque la carga de datos falló.")

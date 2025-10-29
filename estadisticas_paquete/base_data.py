@@ -16,7 +16,7 @@ class DataManager:
         Permite definir el encoding del archivo.
         """
         try:
-            self.df = pd.read_csv(self.ruta, encoding=encoding)
+            self.df = pd.read_csv(self.ruta, encoding='utf-16')
             print(f"Commit 2: Datos cargados exitosamente. {len(self.df)} filas.")
             return True
         except FileNotFoundError:
