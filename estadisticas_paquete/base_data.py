@@ -12,7 +12,7 @@ class DataManager:
     def leer_csv(self):
         """Implementa pd.read_csv() para cargar el DataFrame."""
         try:
-            self.df = pd.read_csv(self.ruta)
+            self.df = pd.read_csv(self.ruta, enconding ='latin1')
             print(f"Commit 2: Datos cargados exitosamente. {len(self.df)} filas.")
             return True
         except FileNotFoundError:
