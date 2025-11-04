@@ -16,8 +16,7 @@ Este repositorio contiene una librería desarrollada en Python para realizar cá
 **Fecha de entrega:** 28 de octubre de 2025   
 
 ## Descripción
-
-**MedidPy** es una librería completa que permite realizar análisis estadístico descriptivo tanto de datos **cuantitativos** (numéricos) como **cualitativos** (categóricos), además de análisis de relaciones entre variables (**bivariado**).
+MedidPy es una biblioteca integral diseñada para llevar a cabo el análisis estadístico descriptivo de datos de naturaleza tanto numérica (cuantitativa) como categórica (cualitativo).
 
 La librería está completamente implementada usando los principios de **Programación Orientada a Objetos**, incluyendo:
 - **Abstracción** mediante clases abstractas
@@ -43,6 +42,10 @@ El proyecto está organizado como un paquete modular, donde cada módulo cumple 
 | └── `resultados.txt` | Archivo de texto con los resultados generados |
 
 ## Características Principales
+### Gestion de datos (DataManager)
+- Lectura de archivos CSV con manejo de encoding
+- Clasificacion automatica de columnas en cuantitativas y cualitativas
+- Integracion con las clases de analisis
 
 ### Análisis de Datos Cuantitativos
 - Medidas de tendencia central (media, mediana, moda)
