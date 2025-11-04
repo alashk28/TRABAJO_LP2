@@ -260,26 +260,6 @@ Mediana de Experiencia: 5.50
 Cuartiles (Experiencia): {'q1': 1.75, 'q3': 8.5, 'iqr': 6.75}
 ```
 
-##Estructura del Paquete
-```
-TRABAJO_LP2/
-├── estadisticas_paquete/
-│   ├── __init__.py           # Inicializa el paquete
-│   ├── base_data.py          # Define DataManager (Carga y Clasifica)
-│   ├── stats_base.py         # Define Estadisticos (Hereda y ejecuta carga)
-│   ├── cuantitativos.py      # Define Cuantitativos (Hereda y calcula)
-│   └── cualitativos.py       # Define Cualitativos (Hereda y calcula)
-│
-├── pruebas/
-│   ├── datos_prueba.csv      # Datos para las pruebas
-│   └── test_general_nuevo.py # Script de pruebas unificado
-│
-├── salidas/
-│   └── .gitkeep
-│
-└── README.md                 # Este archivo
-```
-
 ##Jerarquía del clases
 ```
 DataManager (en base_data.py)
