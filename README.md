@@ -189,16 +189,12 @@ Tabla generada desde DataFrame:
 ```
 ### Ejemplo 4: Cálculo del las medidas de tendencia central (análisis cuantitativo)
 
-```
+```python
 # Importamos la clase desde el paquete
 from estadisticas_paquete import Cuantitativos
 
-# 1. Creamos la instancia pasándole la ruta del CSV
-# La clase (gracias a la herencia) se encarga de cargar y 
-# clasificar las columnas 'Nota' y 'Edad'
 stats_cuanti = Cuantitativos("pruebas/datos_prueba.csv")
 
-# 2. Llamamos a los métodos de cálculo pasando el nombre de la columna
 print("--- Análisis de 'Nota' ---")
 media_nota = stats_cuanti.calcular_media("Nota")
 mediana_nota = stats_cuanti.calcular_mediana("Nota")
@@ -228,7 +224,7 @@ Cuartiles (Edad): {'q1': 21.0, 'q3': 22.0, 'iqr': 1.0}
 ```
 ###Ejemplo 5: Aplicación de análisis cuantitativo
 
-```
+```python
 stats_salarios = Cuantitativos("pruebas/salarios.csv")
 
 # --- Análisis de la columna 'Salario' ---
