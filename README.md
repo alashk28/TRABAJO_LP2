@@ -1,7 +1,5 @@
 # ParcialLP2: Librería de Análisis Estadístico
 
-**Python:** 3.7+  |  **Licencia:** MIT  |  **Estado:** ✅ Activo
-
 Este repositorio contiene una librería desarrollada en Python para realizar cálculos de estadística descriptiva, utilizando los principios de la Programación Orientada a Objetos (POO).
 
 ## Integrantes del Grupo
@@ -9,8 +7,8 @@ Este repositorio contiene una librería desarrollada en Python para realizar cá
 | Nombre | Codigo |
 |--------|--------|
 | Carmen Tullume Arlette | 20231483
-| Flores Villa Brayan | 
-| Palma Cruz Yasmin | 
+| Flores Villa Brayan | 20231492
+| Palma Cruz Yasmin | 20231504
 
 **Institución:** Universidad Nacional Agraria la Molina  
 **Curso:** Lenguaje de Programación 2  
@@ -27,6 +25,23 @@ La librería está completamente implementada usando los principios de **Program
 - **Herencia** con jerarquía de clases
 - **Polimorfismo** con implementaciones específicas
 
+## Estructura del proyecto
+El proyecto está organizado como un paquete modular, donde cada módulo cumple una función específica dentro del análisis estadístico.
+
+ Carpeta / Archivo | Descripción |
+|--------------------|-------------|
+| **estadisticas_paquete/** | Carpeta principal del paquete estadístico |
+| ├── `__init__.py` | Indica que la carpeta es un paquete de Python |
+| ├── `base_data.py` | Clase base encargada de leer, clasificar y manejar los datos |
+| ├── `stats_base.py` | Clase padre con métodos estadísticos generales |
+| ├── `cuantitativos.py` | Contiene la clase para análisis de variables numéricas |
+| └── `cualitativos.py` | Contiene la clase para análisis de variables categóricas |
+| **pruebas/** | Carpeta destinada a las pruebas del paquete |
+| ├── `datos_prueba.csv` | Archivo CSV con datos de ejemplo |
+| └── `test_general.py` | Script que ejecuta todas las pruebas del paquete |
+| **salidas/** | Carpeta donde se guardan los resultados del análisis |
+| └── `resultados.txt` | Archivo de texto con los resultados generados |
+
 ## Características Principales
 
 ### Análisis de Datos Cuantitativos
@@ -39,7 +54,7 @@ La librería está completamente implementada usando los principios de **Program
 - Moda y distribución de frecuencias
 - Tablas de frecuencia (absoluta, relativa, porcentual, acumulada)
 
-## 📦 Instalación
+## Instalación
 
 ### Requisitos
 - Python 3.7 o superior
