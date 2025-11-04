@@ -88,13 +88,16 @@ ruta_csv = os.path.join("pruebas", "datos_prueba.csv")
 dm = DataManager(ruta_csv)
 dm.leer_csv()
 dm.clasificar_columnas()
+```
 
-#### Salida esperada
+**Salida esperada**
+```
 Commit 2: Datos cargados exitosamente. 5 filas.
 Commit 3: Clasificación completada. Cuantitativas: ['Edad', 'Nota'], Cualitativas: ['Nombre', 'Sexo']
+```
 
 ### Ejemplo 1: Calcualar moda y tipo de moda (Análisis cualitativo)
-
+```python
 from estadisticas_paquete.cualitativos import Cualitativos
 from estadisticas_paquete.base_data import DataManager
 import os
@@ -116,12 +119,16 @@ tipo_moda = cuali.mode_type()
 
 print("Moda:", moda)
 print("Tipo de moda:", tipo_moda)
+```
 
-#### Salida esperada
+**Salida esperada**
+```
 Moda: ['F']
 Tipo de moda: Unimodal
+```
 
 ### Ejemplo 2: Generar tablas de frecuencia (Análisis Cualitativo)
+```python
 resumen = cuali.summary(include_table=True, sort_table_by_count=True)
 
 print(f"Variable: {resumen['variable']}")
@@ -138,8 +145,9 @@ for fila in resumen['frequency_table']:
     relativa = f"{fila['relative']:.1%}"
     acumulada = fila['cumulative']
     print(f"{valor:<10} | {conteo:<6} | {relativa:<8} | {acumulada:<9}")
-
-#### Salida esperada
+```
+**Salida esperada**
+```
 Variable: Sexo
 Total de datos: 5
 Moda(s): ['F'] (Unimodal)
@@ -149,9 +157,10 @@ Valor      | Conteo | Relativa | Acumulada
 ----------------------------------------
 F          | 3      | 60.0%    | 3
 M          | 2      | 40.0%    | 5
-
+```
 
 ### Ejemplo 3: Uso con DataFrame directamente
+```python
 from estadisticas_paquete.cualitativos import Cualitativos
 from estadisticas_paquete.base_data import DataManager
 import os
@@ -167,11 +176,14 @@ tabla = cuali_df.build_frequency_table(columna="Sexo")
 print("Tabla generada desde DataFrame:")
 for fila in tabla:
     print(fila)
+```
 
-#### Salida esperada
+**Salida esperada**
+```
 Tabla generada desde DataFrame:
 {'value': 'Yasmin', 'count': 1, 'relative': 0.2, 'cumulative': 1}
 {'value': 'Luis', 'count': 1, 'relative': 0.2, 'cumulative': 2}
 {'value': 'Marta', 'count': 1, 'relative': 0.2, 'cumulative': 3}
 {'value': 'José', 'count': 1, 'relative': 0.2, 'cumulative': 4}
 {'value': 'Lucía', 'count': 1, 'relative': 0.2, 'cumulative': 5}
+```
