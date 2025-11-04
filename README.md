@@ -13,7 +13,7 @@ Este repositorio contiene una librería desarrollada en Python para realizar cá
 **Institución:** Universidad Nacional Agraria la Molina  
 **Curso:** Lenguaje de Programación 2  
 **Profesor:** Ana Vargas  
-**Fecha de entrega:** Martes 4 Noviembre de 2025   
+**Fecha de entrega:** Martes 28 de Octubre de 2025   
 
 ## Descripción
 Elaboramos una biblioteca integral diseñada para llevar a cabo el análisis estadístico descriptivo de datos de naturaleza tanto numérica (cuantitativa) como categórica (cualitativo).
