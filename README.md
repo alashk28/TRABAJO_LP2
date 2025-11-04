@@ -354,7 +354,9 @@ def calcular_moda(self):
             frecuencias[num] = 1
     # ... lógica para obtener modas ...
     return modas  # puede ser [] / valor único / lista
-
+```
+```python
+# En cualitativos.py (cálculo de moda numérica)
 def modes(self, columna=None):
     lista = self._obtener_lista(columna=columna)
     counts = self._frecuencias_de_lista(lista)
