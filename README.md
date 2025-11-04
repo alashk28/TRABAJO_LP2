@@ -337,7 +337,7 @@ class Estadisticos(DataManager):
         self.leer_csv()
         self.clasificar_columnas()
 ```
-### 3. **Polimorfismo**
+### 4. **Polimorfismo**
 El **polimorfismo** se aplica cuando diferentes clases comparten métodos con el mismo nombre, pero cada uno se comporta de forma distinta según el contexto.
 ```python
 # En Cuantitativos
