@@ -55,5 +55,5 @@ cd TRABAJO_LP2/pruebas
 
 2. **Verificar la instalación:**
 ```bash
-python3 test_general.py
+python test_general.py
 ```
