@@ -226,6 +226,39 @@ Desviación Estándar: 2.07
 Asimetría de Pearson (Edad): 1.50
 Cuartiles (Edad): {'q1': 21.0, 'q3': 22.0, 'iqr': 1.0} 
 ```
+###Ejemplo 5: Aplicación de análisis cuantitativo
+
+```
+stats_salarios = Cuantitativos("pruebas/salarios.csv")
+
+# --- Análisis de la columna 'Salario' ---
+print("--- Análisis de 'Salario' ---")
+print(f"Media Salarial: {stats_salarios.calcular_media('Salario'):.2f}")
+print(f"Mediana Salarial: {stats_salarios.calcular_mediana('Salario'):.2f}")
+print(f"Desviación Estándar (Salario): {stats_salarios.calcular_desviacion_estandar('Salario'):.2f}")
+print(f"Rango Salarial: {stats_salarios.calcular_rango('Salario')}")
+
+
+# --- Análisis de la columna 'Experiencia' ---
+print("\n--- Análisis de 'Experiencia' ---")
+print(f"Media de Experiencia: {stats_salarios.calcular_media('Experiencia'):.2f}")
+print(f"Mediana de Experiencia: {stats_salarios.calcular_mediana('Experiencia'):.2f}")
+cuartiles_exp = stats_salarios.calcular_cuartiles_iqr('Experiencia')
+print(f"Cuartiles (Experiencia): {cuartiles_exp}")
+```
+**Resultado**
+```
+--- Análisis de 'Salario' ---
+Media Salarial: 73250.00
+Mediana Salarial: 67500.00
+Desviación Estándar (Salario): 40523.25
+Rango Salarial: 115000
+
+--- Análisis de 'Experiencia' ---
+Media de Experiencia: 6.00
+Mediana de Experiencia: 5.50
+Cuartiles (Experiencia): {'q1': 1.75, 'q3': 8.5, 'iqr': 6.75}
+```
 
 ##Estructura del Paquete
 ```
