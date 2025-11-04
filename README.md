@@ -340,21 +340,26 @@ class Estadisticos(DataManager):
 ### 4. **Polimorfismo**
 El **polimorfismo** se aplica cuando diferentes clases comparten métodos con el mismo nombre, pero cada uno se comporta de forma distinta según el contexto.
 ```python
-# En Cuantitativos
-def summary(self):
-    return {
-        "media": self.calcular_media(),
-        "mediana": self.calcular_mediana(),
-        "desviacion": self.calcular_desviacion_estandar()
-    }
+# En cuantitativos.py (cálculo de moda numérica)
+def calcular_moda(self):
+    # cuenta frecuencias en self.datos y devuelve:
+    # - [] si no hay moda
+    # - un solo número si es unimodal
+    # - una lista si es multimodal
+    frecuencias = {}
+    for num in self.datos:
+        if num in frecuencias:
+            frecuencias[num] += 1
+        else:
+            frecuencias[num] = 1
+    # ... lógica para obtener modas ...
+    return modas  # puede ser [] / valor único / lista
 
-# En Cualitativos
-def summary(self, include_table=True, sort_table_by_count=False):
-    return {
-        "variable": self.nombre,
-        "modes": self.modes(),
-        "mode_type": self.mode_type(),
-        "frequency_table": self.build_frequency_table(sort_by_count=sort_table_by_count)
-    }
+def modes(self, columna=None):
+    lista = self._obtener_lista(columna=columna)
+    counts = self._frecuencias_de_lista(lista)
+    return result 
+def moda(self, columna=None):
+    return self.modes(columna=columna)  # alias en español
 
 ```
