@@ -286,3 +286,75 @@ Cuantitativos                     Cualitativos
    - calcular_coeficiente_variacion(col)
    - calcular_asimetria_pearson(col)
 ```
+
+## Conceptos de POO usados en el proyecto
+Nuestro proyecto aplica los **cuatro pilares fundamentales de la POO**:  
+**Abstracción, Encapsulamiento, Herencia y Polimorfismo**, en el contexto del análisis estadístico de datos cuantitativos y cualitativos.
+
+---
+
+### 1. **Abstracción**
+La **abstracción** nos permite representar los componentes esenciales del análisis estadístico mediante clases, ocultando los detalles complejos de implementación.
+
+```python
+class Cualitativos:
+    """Clase para estadísticas cualitativas (tablas de frecuencia, moda, etc.)"""
+    def __init__(self, datos=None, nombre="Variable_Cualitativa"):
+        self.nombre = nombre
+        self.datos = []
+        if datos is not None:
+            for x in datos:
+                self.datos.append(x)
+```
+### 2. **Encapsulamiento**
+El **encapsulamiento** protege los datos internos de las clases, limitando el acceso directo y controlando su modificación mediante métodos internos.
+```python
+class Cualitativos:
+    def __init__(self, datos=None, nombre="Variable_Cualitativa"):
+        self.nombre = nombre
+        self.datos = []
+        self._tabla = None
+        self._modas = None
+
+    def _frecuencias_de_lista(self, lista):
+        frec = {}
+        for valor in lista:
+            if valor in frec:
+                frec[valor] = frec[valor] + 1
+            else:
+                frec[valor] = 1
+        return frec
+```
+
+### 3. **Herencia**
+La **herencia** permite reutilizar código existente para crear nuevas clases más específicas sin volver a escribir la lógica básica.
+```python
+from .base_data import DataManager
+
+class Estadisticos(DataManager):
+    def __init__(self, ruta_csv):
+        super().__init__(ruta_csv)
+        self.leer_csv()
+        self.clasificar_columnas()
+```
+### 3. **Polimorfismo**
+El **polimorfismo** se aplica cuando diferentes clases comparten métodos con el mismo nombre, pero cada uno se comporta de forma distinta según el contexto.
+```python
+# En Cuantitativos
+def summary(self):
+    return {
+        "media": self.calcular_media(),
+        "mediana": self.calcular_mediana(),
+        "desviacion": self.calcular_desviacion_estandar()
+    }
+
+# En Cualitativos
+def summary(self, include_table=True, sort_table_by_count=False):
+    return {
+        "variable": self.nombre,
+        "modes": self.modes(),
+        "mode_type": self.mode_type(),
+        "frequency_table": self.build_frequency_table(sort_by_count=sort_table_by_count)
+    }
+
+```
