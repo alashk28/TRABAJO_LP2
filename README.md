@@ -340,7 +340,7 @@ class Estadisticos(DataManager):
 ### 4. **Polimorfismo**
 El **polimorfismo** se aplica cuando diferentes clases comparten métodos con el mismo nombre, pero cada uno se comporta de forma distinta según el contexto.
 ```python
-# En cuantitativos.py (cálculo de moda numérica)
+# En cuantitativos.py 
 def calcular_moda(self):
     # cuenta frecuencias en self.datos y devuelve:
     # - [] si no hay moda
@@ -356,7 +356,7 @@ def calcular_moda(self):
     return modas  # puede ser [] / valor único / lista
 ```
 ```python
-# En cualitativos.py (cálculo de moda numérica)
+# En cualitativos.py 
 def modes(self, columna=None):
     lista = self._obtener_lista(columna=columna)
     counts = self._frecuencias_de_lista(lista)
