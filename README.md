@@ -13,10 +13,10 @@ Este repositorio contiene una librería desarrollada en Python para realizar cá
 **Institución:** Universidad Nacional Agraria la Molina  
 **Curso:** Lenguaje de Programación 2  
 **Profesor:** Ana Vargas  
-**Fecha de entrega:** 28 de octubre de 2025   
+**Fecha de entrega:** Martes 4 Noviembre de 2025   
 
 ## Descripción
-MedidPy es una biblioteca integral diseñada para llevar a cabo el análisis estadístico descriptivo de datos de naturaleza tanto numérica (cuantitativa) como categórica (cualitativo).
+Elaboramos una biblioteca integral diseñada para llevar a cabo el análisis estadístico descriptivo de datos de naturaleza tanto numérica (cuantitativa) como categórica (cualitativo).
 
 La librería está completamente implementada usando los principios de **Programación Orientada a Objetos**, incluyendo:
 - **Abstracción** mediante clases abstractas
@@ -186,4 +186,90 @@ Tabla generada desde DataFrame:
 {'value': 'Marta', 'count': 1, 'relative': 0.2, 'cumulative': 3}
 {'value': 'José', 'count': 1, 'relative': 0.2, 'cumulative': 4}
 {'value': 'Lucía', 'count': 1, 'relative': 0.2, 'cumulative': 5}
+```
+### Ejemplo 4: Cálculo del las medidas de tendencia central (análisis cuantitativo)
+
+```
+# Importamos la clase desde el paquete
+from estadisticas_paquete import Cuantitativos
+
+# 1. Creamos la instancia pasándole la ruta del CSV
+# La clase (gracias a la herencia) se encarga de cargar y 
+# clasificar las columnas 'Nota' y 'Edad'
+stats_cuanti = Cuantitativos("pruebas/datos_prueba.csv")
+
+# 2. Llamamos a los métodos de cálculo pasando el nombre de la columna
+print("--- Análisis de 'Nota' ---")
+media_nota = stats_cuanti.calcular_media("Nota")
+mediana_nota = stats_cuanti.calcular_mediana("Nota")
+std_nota = stats_cuanti.calcular_desviacion_estandar("Nota")
+
+print(f"Media: {media_nota:.2f}")
+print(f"Mediana: {mediana_nota:.2f}")
+print(f"Desviación Estándar: {std_nota:.2f}")
+
+print("\n--- Análisis de 'Edad' ---")
+asimetria_edad = stats_cuanti.calcular_asimetria_pearson("Edad")
+cuartiles_edad = stats_cuanti.calcular_cuartiles_iqr("Edad")
+
+print(f"Asimetría de Pearson (Edad): {asimetria_edad:.2f}")
+print(f"Cuartiles (Edad): {cuartiles_edad}")
+```
+**Resultado**
+```
+--- Análisis de 'Nota' ---
+Media: 16.60
+Mediana: 17.00
+Desviación Estándar: 2.07
+
+--- Análisis de 'Edad' ---
+Asimetría de Pearson (Edad): 1.50
+Cuartiles (Edad): {'q1': 21.0, 'q3': 22.0, 'iqr': 1.0} 
+```
+
+##Estructura del Paquete
+```
+TRABAJO_LP2/
+├── estadisticas_paquete/
+│   ├── __init__.py           # Inicializa el paquete
+│   ├── base_data.py          # Define DataManager (Carga y Clasifica)
+│   ├── stats_base.py         # Define Estadisticos (Hereda y ejecuta carga)
+│   ├── cuantitativos.py      # Define Cuantitativos (Hereda y calcula)
+│   └── cualitativos.py       # Define Cualitativos (Hereda y calcula)
+│
+├── pruebas/
+│   ├── datos_prueba.csv      # Datos para las pruebas
+│   └── test_general_nuevo.py # Script de pruebas unificado
+│
+├── salidas/
+│   └── .gitkeep
+│
+└── README.md                 # Este archivo
+```
+
+##Jerarquía del clases
+```
+DataManager (en base_data.py)
+  │   - Carga el CSV con Pandas
+  │   - Clasifica columnas (cuantitativas, cualitativas)
+  ↓
+Estadisticos (en stats_base.py)
+  │   - Hereda de DataManager
+  │   - En su __init__, ejecuta leer_csv() y clasificar_columnas()
+  │   - Guarda el self.df listo para usar
+  ↓
+┌─┴─────────────────────────────────┐
+│                                 │
+Cuantitativos                     Cualitativos
+ - Hereda de Estadisticos          - Hereda de Estadisticos
+ - Métodos:                        - Métodos:
+   - calcular_media(col)             - summary(col)
+   - calcular_mediana(col)           - build_frequency_table(col)
+   - calcular_moda(col)              - modes(col)
+   - calcular_varianza(col)          - moda(col)
+   - calcular_desviacion_estandar(col) - mode_type(col)
+   - calcular_cuartiles_iqr(col)     - relative_frequencies(col)
+   - calcular_rango(col)
+   - calcular_coeficiente_variacion(col)
+   - calcular_asimetria_pearson(col)
 ```
