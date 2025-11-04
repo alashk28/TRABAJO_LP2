@@ -11,6 +11,33 @@ class Cuantitativos(Estadisticos):
         """
         super().__init__(ruta_csv)
 
+    def _longitud(self, iterable):
+        """
+        Implementación de lógica pura para len()
+        """
+        c = 0
+        for _ in iterable:
+            c = c + 1
+        return c
+
+    def _bubble_sort(self, lista):
+        """
+        Implementación de lógica pura para sorted() (Ordenamiento Burbuja)
+        """
+        n = self._longitud(lista)
+        for i in range(n):
+            hubo_intercambio = False
+            for j in range(0, n - i - 1):
+                if lista[j] > lista[j+1]:
+                    lista[j], lista[j+1] = lista[j+1], lista[j]
+                    hubo_intercambio = True
+            
+            # Si no hubo intercambios en este recorrido, la lista ya está ordenada
+            if not hubo_intercambio:
+                break
+        return lista
+
+
     def _get_data_list(self, columna: str) -> tuple[list, int]:
         """
         Función auxiliar CLAVE.
@@ -20,23 +47,24 @@ class Cuantitativos(Estadisticos):
         if self.df is None:
             raise RuntimeError("El DataFrame no ha sido cargado.")
             
-        # Validamos que la columna sea cuantitativa (lista heredada de DataManager)
         if columna not in self.cuantitativas:
             raise ValueError(f"'{columna}' no es una columna cuantitativa. Disponibles: {self.cuantitativas}")
         
-        # Limpia, quita NaNs, y ordena los datos de la columna
-        datos = sorted([
+        # 1. Extrae los datos sin ordenar
+        datos_sin_ordenar = [
             num for num in self.df[columna].dropna() 
             if isinstance(num, (int, float))
-        ])
+        ]
+        
+        # 2. Aplica el ordenamiento de lógica pura
+        datos = self._bubble_sort(datos_sin_ordenar)
         
         if not datos:
             raise ValueError(f"La columna '{columna}' no tiene datos numéricos válidos.")
             
-        return datos, len(datos) # Devuelve la lista y su tamaño
-
-    # --- INICIO DE LÓGICA PURA ADAPTADA ---
-    # Todos los métodos de 'rama-cuantitativa' ahora reciben 'columna'
+        # 3. Usa la longitud de lógica pura
+        n = self._longitud(datos)
+        return datos, n # Devuelve la lista y su tamaño
 
     def calcular_media(self, columna: str):
         datos, n = self._get_data_list(columna)
@@ -56,9 +84,11 @@ class Cuantitativos(Estadisticos):
             return float('nan')
 
         if n % 2 == 1:
+            # Impar
             indice = n // 2
             return datos[indice]
         else:
+            # Par
             indice_sup = n // 2
             indice_inf = indice_sup - 1
             return (datos[indice_inf] + datos[indice_sup]) / 2
@@ -87,6 +117,7 @@ class Cuantitativos(Estadisticos):
     def _calcular_percentil(self, datos_lista: list, n_lista: int, p: float):
         """
         Función auxiliar para calcular percentiles sobre una lista dada.
+        (Usa n_lista que ya viene de _longitud)
         """
         posicion = (n_lista - 1) * p
         k = int(posicion)
@@ -140,7 +171,7 @@ class Cuantitativos(Estadisticos):
             if frecuencias[num] == max_frecuencia:
                 modas.append(num)
         
-        return modas[0] if len(modas) == 1 else modas
+        return modas[0] if self._longitud(modas) == 1 else modas
 
     def calcular_rango(self, columna: str):
         datos, n = self._get_data_list(columna)
